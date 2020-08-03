@@ -106,6 +106,7 @@ for name, data in grpd:
 
         # SVM model
         
+        # SVM parameters
         kernel = ['poly', 'sigmoid', 'rbf']
         c = [0.01, 0.1, 1, 10]
         gamma = [0.01, 0.1, 1]
@@ -142,8 +143,7 @@ for name, data in grpd:
         
         plt.title('Número de casos de Covid a lo largo del tiempo', size=30)
         plt.xlabel('Días desde 31/12/2019', size=30)
-        plt.ylabel('Número de casos', size=30)
-        # plt.legend(['Casos confirmados', 'Predicciones'])
+        plt.ylabel('Número de casos', size=30)        
         plt.legend(['Predicciones de casos', 'Predicciones de muertes', 'Casos confirmados', 'Muertes confirmadas'])
         plt.xticks(size=15)
         plt.yticks(size=15)
