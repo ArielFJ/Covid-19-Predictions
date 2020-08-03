@@ -9,34 +9,16 @@ from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from sklearn.svm import SVR
 plt.style.use('seaborn')
 
-
 url = 'https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv'
 
 res = requests.get(url).content
 df = pd.read_csv(io.StringIO(res.decode('utf-8')), error_bad_lines=False)
 
-
-'''
-Dataframe keys
-
-['iso_code', 'continent', 'location', 'date', 'total_cases', 'new_cases',
-       'total_deaths', 'new_deaths', 'total_cases_per_million',
-       'new_cases_per_million', 'total_deaths_per_million',
-       'new_deaths_per_million', 'new_tests', 'total_tests',
-       'total_tests_per_thousand', 'new_tests_per_thousand',
-       'new_tests_smoothed', 'new_tests_smoothed_per_thousand', 'tests_units', 
-       'stringency_index', 'population', 'population_density', 'median_age',   
-       'aged_65_older', 'aged_70_older', 'gdp_per_capita', 'extreme_poverty',  
-       'cardiovasc_death_rate', 'diabetes_prevalence', 'female_smokers',       
-       'male_smokers', 'handwashing_facilities', 'hospital_beds_per_thousand', 
-       'life_expectancy']
-'''
-
-
 grpd = df.groupby('location')
 
-
 for name, data in grpd:        
+
+    # Name of the country to predict, or "World" to make it global
     if(name == "Dominican Republic"):
         dates = data['date']        
         new_cases = data['new_cases']
@@ -44,15 +26,14 @@ for name, data in grpd:
         new_deaths = data['new_deaths']
         total_deaths = data['total_deaths']
 
-        
-        
+       
         days_since_31_12_2019 = np.array([i for i in range(len(dates))]).reshape(-1, 1)
         new_cases_reshaped = np.array(new_cases).reshape(-1, 1)
         new_deaths_reshaped = np.array(new_deaths).reshape(-1, 1)
         total_cases_reshaped = np.array(total_cases).reshape(-1, 1)
         total_deaths_reshaped = np.array(total_deaths).reshape(-1, 1)
 
-
+              
         # Furute forecasting for next 365 days
         days_in_future = 340
         future_forecast = np.array([i for i in range(len(dates) + days_in_future)]).reshape(-1, 1)
@@ -148,6 +129,5 @@ for name, data in grpd:
         plt.xticks(size=15)
         plt.yticks(size=15)
         
-
-        plt.show()
-        
+       
+        plt.show()        
